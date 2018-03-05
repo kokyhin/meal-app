@@ -1,0 +1,17 @@
+<div class="center-content">
+  <div class="login-wrapper">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <ion-item no-padding>
+        <ion-label floating>Username</ion-label>
+        <ion-input ngModel name="username" required type="text"></ion-input>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label floating>Password</ion-label>
+        <ion-input ngModel name="password" required type="password"></ion-input>
+      </ion-item>
+      <br><br>
+      <button ion-button full>Login</button>
+    </form>
+  </div>
+</div>
