@@ -1,3 +1,92 @@
 page-order {
+  .scroll-content {
+    display: flex;
+    align-items: center;
+  }
+  .order-wrapper {
+    width: 100%;
+  }
 
+  input.ng-invalid {
+    border-color: red;
+  }
+  input {
+    border: 1px solid transparent;
+    height: 35px;
+    border-radius: 30px;
+    color: #2b2c4e;
+    font-size: 14px;
+    max-width: 60px;
+    box-shadow: none;
+    background-color: #fff;
+
+    &:focus {
+      background-color: rgba(255,255,255, 0.6);
+      box-shadow: none;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #F44336;
+    }
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .name {
+      flex: 1;
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .btn-save {
+    padding: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #7fd344;
+    background-color: transparent;
+    border-radius: 30px;
+    color: #7fd344;
+    font-size: 16px;
+    line-height: 40px;
+
+    &:hover, &:focus {
+      background-color: #7fd344;
+      color: #fff;
+    }
+  }
+
+  .price {
+    text-align: right;
+    border-top: 2px solid rgba(65, 64, 69, 0.05);
+    font-size: 16px;
+    padding: 0px 0 15px;
+  }
+
+  .date-wrapper {
+    padding: 10px 0;
+
+    .week-day {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .date {
+      color: #7fd344;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 10px;
+      }
+    }
+  }
 }

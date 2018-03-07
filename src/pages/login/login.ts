@@ -2,7 +2,7 @@ import { OrderPage } from './../order/order';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, AlertController, NavController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpClient } from "@angular/common/http";
 import { AuthService } from '../../services/auth';
 
 @IonicPage()
@@ -17,7 +17,7 @@ export class LoginPage {
       private authService: AuthService,
       private alertCtrl: AlertController,
       private navCtrl: NavController,
-      private http: Http
+      private http: HttpClient
     ) {
   }
 
@@ -28,7 +28,6 @@ export class LoginPage {
     loading.present();
     this.authService.signin(form.value).subscribe(
       (response) => {
-        console.log(response.json())
         this.navCtrl.setRoot(OrderPage);
         loading.dismiss();
       },

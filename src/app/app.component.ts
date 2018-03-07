@@ -22,8 +22,10 @@ export class MyApp implements DoCheck {
     });
   }
   ngDoCheck() {
-    const auth = this.authService.checkAuth();
-    // console.log(auth);
+    if (this.authService.checkAuth()) {
+      return this.rootPage = OrderPage;
+    }
+    this.rootPage = LoginPage;
   }
 }
 
