@@ -34,7 +34,7 @@ export class OrderPage {
   }
 
   getOrder() {
-    this.http.get(`http://localhost:3000/api/order/get-day/${this.myDate}`).subscribe(
+    this.http.get(`http://meal.fusionworks.md/api/order/get-day/${this.myDate}`).subscribe(
       (response) => {
         this.day = response;
       },
@@ -59,7 +59,7 @@ export class OrderPage {
         second: this.day.second
       }
     };
-    this.http.post('http://localhost:3000/api/order', order).subscribe(
+    this.http.post('http://meal.fusionworks.md/api/order', order).subscribe(
       (response) => {
         this.day = response;
       },

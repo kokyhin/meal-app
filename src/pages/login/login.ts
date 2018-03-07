@@ -2,7 +2,6 @@ import { OrderPage } from './../order/order';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, AlertController, NavController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from "@angular/common/http";
 import { AuthService } from '../../services/auth';
 
 @IonicPage()
@@ -16,8 +15,7 @@ export class LoginPage {
       private loadingCtrl: LoadingController,
       private authService: AuthService,
       private alertCtrl: AlertController,
-      private navCtrl: NavController,
-      private http: HttpClient
+      private navCtrl: NavController
     ) {
   }
 
