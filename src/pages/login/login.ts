@@ -25,7 +25,9 @@ export class LoginPage {
     });
     loading.present();
     this.authService.signin(form.value).subscribe(
-      (response) => {
+      (response: any) => {
+        localStorage.setItem('token', response.token);
+        this.authService.token = `${response.token}`;
         this.navCtrl.setRoot(OrderPage);
         loading.dismiss();
       },
@@ -33,7 +35,7 @@ export class LoginPage {
         loading.dismiss();
         const alert = this.alertCtrl.create({
           title: 'Signin failed!',
-          message: error._body,
+          message: error.error.message,
           buttons: ['Ok']
         });
         alert.present();

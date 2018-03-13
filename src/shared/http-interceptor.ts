@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
 import {
   HttpRequest,
   HttpHandler,
@@ -6,11 +6,19 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
+import { AuthService } from "../services/auth";
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private inj: Injector) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({withCredentials: true});
+    const auth = this.inj.get(AuthService);
+    const token = auth.token;
+    const localToken = localStorage.getItem('token') || 'test';
+    request = request.clone({
+      setHeaders: {
+        Authorization: token ? token : localToken
+      }
+    });
     return next.handle(request);
   }
 };
