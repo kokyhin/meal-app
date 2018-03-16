@@ -6,6 +6,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MyApp } from './app.component';
@@ -30,6 +31,7 @@ import { AuthService } from '../services/auth';
   ],
   providers: [
     StatusBar,
+    Keyboard,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true},

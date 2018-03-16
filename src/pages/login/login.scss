@@ -21,6 +21,9 @@ page-login {
       }
       input {
         font-style: italic;
+        &.pass {
+          font-style: normal;
+        }
       }
     }
     form {

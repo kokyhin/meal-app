@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 export class OrderPage {
   day = null;
   myDate;
+  tabs;
 
   constructor(
     private http: HttpClient,
@@ -30,15 +31,50 @@ export class OrderPage {
   }
 
   ionViewDidLoad() {
-    this.getOrder();
+    this.getOrder(this.myDate);
+    this.getTabs(this.myDate);
   }
 
-  getOrder() {
-    this.http.get(`http://localhost:3000/api/order/get-day/${this.myDate}`).subscribe(
+  getOrder(date) {
+    this.http.get(`http://localhost:3000/api/order/get-day/${date}`).subscribe(
       (response) => {
         this.day = response;
       },
       (error) => {
+        const alert = this.alertCtrl.create({
+          title: 'Fetch order fail',
+          message: error.error ? error.error.message : error.message,
+          buttons: ['Ok']
+        });
+        alert.present();
+      }
+    )
+  }
+
+  getTabs(date) {
+    this.http.get(`http://localhost:3000/api/order/get-mobile-week/${date}`).subscribe(
+      (response) => {
+        this.tabs = response;
+      },
+      (error) => {
+        const alert = this.alertCtrl.create({
+          title: 'Fetch tabs fail',
+          message: error.error ? error.error.message : error.message,
+          buttons: ['Ok']
+        });
+        alert.present();
+      }
+    )
+  }
+
+  updatePage(refresher) {
+    this.http.get(`http://localhost:3000/api/order/get-day/${this.myDate}`).subscribe(
+      (response) => {
+        this.day = response;
+        refresher.complete();
+      },
+      (error) => {
+        refresher.complete();
         const alert = this.alertCtrl.create({
           title: 'Fetch order fail',
           message: error.error ? error.error.message : error.message,
