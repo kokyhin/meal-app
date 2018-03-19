@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth';
   templateUrl: 'app.html'
 })
 export class MyApp implements OnInit {
-  rootPage:any = LoginPage;
+  rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService) {
     platform.ready().then(() => {
