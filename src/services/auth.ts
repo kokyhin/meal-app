@@ -7,10 +7,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
   token = null;
   signin(user: Object) {
-    return this.http.post('http://localhost:3000/api/auth/login-mobile', user)
+    return this.http.post('http://meal.fusionworks.md/api/auth/login-mobile', user)
   }
 
   isAuth() {
-    return this.http.get('http://localhost:3000/api/auth/is-auth')
+    return this.http.get('http://meal.fusionworks.md/api/auth/is-auth')
   }
 }

@@ -1,83 +1,61 @@
-<ion-content padding>
+<ion-content>
   <div class="order-wrapper" *ngIf="day">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-12>
-            <div class="tabs-row">
-              <div class="weekday" (click)="getOrder(date)" *ngFor="let date of tabs">{{ date | date }}</div>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <form #order="ngForm" (ngSubmit)="submit(order)">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-12>
-            <div class="week-day">{{ day.date | date: "EEEE" }}</div>
-            <div class="date">
-              <span>{{ day.date | date }}</span>
-            </div>
-              <div class="input-wrapper">
-                <div class="name">
-                  <!-- <select class="form-control" *ngIf="day.options.first.length > 1; else defaultFirst" value="{{day.order.first.option}}" name="option">
-                    <option *ngFor="let option of day.options.first;">{{option}}</option>
-                  </select> -->
-                  <!-- <span><ng-template #defaultFirst>{{day.options.first[0] || "First"}}</ng-template></span> -->
-                  <span>First</span>
-                </div>
-                <input type="text" id="first" class="form-control custom" type="number" min="0" [(ngModel)]="day.first.value" name="first">
-              </div>
-              <div class="input-wrapper">
-                <div class="name">
-                  <!-- <select class="form-control" *ngIf="day.options.second.length > 1; else defaultSecond" value="{{day.order.second.option}}" name="option">
-                    <option *ngFor="let option of day.options.second;">{{option}}</option>
-                  </select> -->
-                  <!-- <span><ng-template #defaultSecond>{{day.options.second[0] || "Second"}}</ng-template></span> -->
-                  <span>Second</span>
-                </div>
-                <input type="text" id="second" class="form-control custom" type="number" [(ngModel)]="day.second.value" name="second">
-              </div>
-            <div class="price">
-              {{day.total}} MDL
-            </div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-6>
-            <button ion-button full (click)="datePicker.open(); false">
-              <ion-icon name="calendar"></ion-icon>
-              <ion-datetime
-                #datePicker hidden="true"
-                displayFormat="DD/MM/YYYY"
-                [(ngModel)]="myDate" name="date"
-                (ngModelChange)="getOrder(myDate)"></ion-datetime>
-            </button>
-          </ion-col>
-          <ion-col col-6>
-            <button ion-button full>
-              <ion-icon name="checkmark-circle"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </form>
+    <div class=order-head>
+      <div class="tabs-row">
+        <div (click)="getOrder(date, $event)" *ngFor="let date of tabs; let i = index" [ngClass]="{ active: i == 0, weekday: true }">
+          <div>
+            {{ date | date: "dd" }}
+            <div class="day">{{ date | date: "EE" }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-form">
+      <form>
+        <div class="form-title">Your Order</div>
+        <div class="input-wrapper">
+          <div class="name">
+            <!-- <select class="form-control" *ngIf="day.options.first.length > 1; else defaultFirst" value="{{day.order.first.option}}" name="option">
+              <option *ngFor="let option of day.options.first;">{{option}}</option>
+            </select> -->
+            <!-- <span><ng-template #defaultFirst>{{day.options.first[0] || "First"}}</ng-template></span> -->
+            <span>First Course</span>
+          </div>
+          <div class="navs">
+            <button ion-button (tap)="decrease('first')"><ion-icon name="remove"></ion-icon></button>
+            <div class="amount">{{ day.first.value }}</div>
+            <button ion-button (tap)="increase('first')"><ion-icon name="add"></ion-icon></button>
+          </div>
+          <!-- <input #first="ngModel" hidden type="text" id="first" class="form-control custom" type="number" min="0" [(ngModel)]="day.first.value" name="first"> -->
+        </div>
+        <div class="input-wrapper">
+          <div class="name">
+            <!-- <select class="form-control" *ngIf="day.options.second.length > 1; else defaultSecond" value="{{day.order.second.option}}" name="option">
+              <option *ngFor="let option of day.options.second;">{{option}}</option>
+            </select> -->
+            <!-- <span><ng-template #defaultSecond>{{day.options.second[0] || "Second"}}</ng-template></span> -->
+            <span>Second Course</span>
+          </div>
+          <div class="navs">
+            <button ion-button (tap)="decrease('second')"><ion-icon name="remove"></ion-icon></button>
+            <div class="amount">{{ day.second.value }}</div>
+            <button ion-button (tap)="increase('second')"><ion-icon name="add"></ion-icon></button>
+          </div>
+
+          <!-- <input hidden type="text" id="second" class="form-control custom" type="number" [(ngModel)]="day.second.value" name="second"> -->
+        </div>
+        <div class="price">
+          <div>Total</div>
+          <div>{{day.total}} MDL</div>
+        </div>
+
+      </form>
+    </div>
+    <div class="order-footer">
+      <button ion-button full (tap)="submit(order)">place order</button>
+    </div>
   </div>
   <ion-refresher (ionRefresh)="updatePage($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons start>
-      <button ion-button icon-only>
-        <ion-icon name="calendar"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>

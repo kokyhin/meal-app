@@ -1,8 +1,10 @@
 import { Observable } from 'rxjs/Rx';
-import { Component } from '@angular/core';
-import { IonicPage, AlertController } from 'ionic-angular';
+import { Component, ElementRef } from '@angular/core';
+import { IonicPage, AlertController, ToastController } from 'ionic-angular';
 import { HttpClient } from "@angular/common/http";
 import { NgForm } from '@angular/forms';
+import { each } from 'lodash'
+import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
 @Component({
@@ -16,7 +18,10 @@ export class OrderPage {
 
   constructor(
     private http: HttpClient,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private _elementRef : ElementRef,
+    private toastCtrl: ToastController,
+    private statusBar: StatusBar
   ) {
     this.myDate = this.getCurrentDay(new Date());
   }
@@ -31,12 +36,17 @@ export class OrderPage {
   }
 
   ionViewDidLoad() {
-    this.getOrder(this.myDate);
+    this.getOrder(this.myDate, null);
     this.getTabs(this.myDate);
+    this.statusBar.backgroundColorByHexString('#000000');
   }
 
-  getOrder(date) {
-    this.http.get(`http://localhost:3000/api/order/get-day/${date}`).subscribe(
+  getOrder(date, ev) {
+    if (ev) {
+      each(this._elementRef.nativeElement.querySelectorAll('.weekday'), (el) => el.classList.remove('active'));
+      ev.currentTarget.classList.add('active');
+    }
+    this.http.get(`http://meal.fusionworks.md/api/order/get-day/${date}`).subscribe(
       (response) => {
         this.day = response;
       },
@@ -52,7 +62,7 @@ export class OrderPage {
   }
 
   getTabs(date) {
-    this.http.get(`http://localhost:3000/api/order/get-mobile-week/${date}`).subscribe(
+    this.http.get(`http://meal.fusionworks.md/api/order/get-mobile-week/${date}`).subscribe(
       (response) => {
         this.tabs = response;
       },
@@ -68,7 +78,7 @@ export class OrderPage {
   }
 
   updatePage(refresher) {
-    this.http.get(`http://localhost:3000/api/order/get-day/${this.myDate}`).subscribe(
+    this.http.get(`http://meal.fusionworks.md/api/order/get-day/${this.day.date}`).subscribe(
       (response) => {
         this.day = response;
         refresher.complete();
@@ -85,6 +95,17 @@ export class OrderPage {
     )
   }
 
+  increase(course) {
+    ++this.day[course].value;
+    this.day.total = this.day.total + (course == 'first' ? 10 : 30);
+  }
+
+  decrease(course) {
+    if (this.day[course].value == 0) return;
+    --this.day[course].value;
+    this.day.total = this.day.total - (course == 'first' ? 10 : 30);
+  }
+
   submit(form: NgForm) {
     const order = {
       _id: this.day._id,
@@ -95,9 +116,16 @@ export class OrderPage {
         second: this.day.second
       }
     };
-    this.http.post('http://localhost:3000/api/order', order).subscribe(
+    this.http.post('http://meal.fusionworks.md/api/order', order).subscribe(
       (response) => {
         this.day = response;
+        let toast = this.toastCtrl.create({
+          message: 'Your order was successfully saved',
+          position: 'middle',
+          cssClass: 'tost-message',
+          duration: 2000
+        });
+        toast.present();
       },
       (error) => {
         const alert = this.alertCtrl.create({
