@@ -4,7 +4,6 @@ import { IonicPage, AlertController, ToastController } from 'ionic-angular';
 import { HttpClient } from "@angular/common/http";
 import { NgForm } from '@angular/forms';
 import { each } from 'lodash'
-import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
 @Component({
@@ -20,8 +19,7 @@ export class OrderPage {
     private http: HttpClient,
     private alertCtrl: AlertController,
     private _elementRef : ElementRef,
-    private toastCtrl: ToastController,
-    private statusBar: StatusBar
+    private toastCtrl: ToastController
   ) {
     this.myDate = this.getCurrentDay(new Date());
   }
@@ -38,7 +36,6 @@ export class OrderPage {
   ionViewDidLoad() {
     this.getOrder(this.myDate, null);
     this.getTabs(this.myDate);
-    this.statusBar.backgroundColorByHexString('#000000');
   }
 
   getOrder(date, ev) {
@@ -122,7 +119,6 @@ export class OrderPage {
         let toast = this.toastCtrl.create({
           message: 'Your order was successfully saved',
           position: 'middle',
-          cssClass: 'tost-message',
           duration: 2000
         });
         toast.present();
