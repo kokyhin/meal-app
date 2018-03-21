@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, AlertController, ToastController, LoadingController } from 'ionic-angular';
 import { HttpClient } from "@angular/common/http";
 import { NgForm } from '@angular/forms';
 import { each } from 'lodash'
@@ -19,7 +19,8 @@ export class OrderPage {
     private http: HttpClient,
     private alertCtrl: AlertController,
     private _elementRef : ElementRef,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
   ) {
     this.myDate = this.getCurrentDay(new Date());
   }
@@ -43,9 +44,14 @@ export class OrderPage {
       each(this._elementRef.nativeElement.querySelectorAll('.weekday'), (el) => el.classList.remove('active'));
       ev.currentTarget.classList.add('active');
     }
+    const loading = this.loadingCtrl.create({
+      content: 'Loading...'
+    });
+    loading.present();
     this.http.get(`http://meal.fusionworks.md/api/order/get-day/${date}`).subscribe(
       (response) => {
         this.day = response;
+        loading.dismiss();
       },
       (error) => {
         const alert = this.alertCtrl.create({
@@ -53,6 +59,7 @@ export class OrderPage {
           message: error.error ? error.error.message : error.message,
           buttons: ['Ok']
         });
+        loading.dismiss();
         alert.present();
       }
     )
