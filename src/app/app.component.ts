@@ -18,7 +18,6 @@ export class MyApp implements OnInit {
       // Here you can do any higher level native things you might need.
       statusBar.overlaysWebView(false);
       statusBar.backgroundColorByHexString('#000000');
-      splashScreen.hide();
     });
   }
   ngOnInit() {
