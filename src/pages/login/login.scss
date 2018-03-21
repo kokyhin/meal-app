@@ -19,12 +19,6 @@ page-login {
       input, .label {
         color: #fff;
       }
-      input {
-        font-style: italic;
-        &.pass {
-          font-style: normal;
-        }
-      }
     }
     form {
       position: relative;
