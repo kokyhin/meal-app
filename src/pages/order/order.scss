@@ -56,6 +56,9 @@ page-order {
 
     .name {
       flex: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
       span {
         font-size: 20px;
       }
