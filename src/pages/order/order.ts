@@ -1,8 +1,6 @@
-import { Observable } from 'rxjs/Rx';
 import { Component, ElementRef } from '@angular/core';
 import { IonicPage, AlertController, ToastController, LoadingController } from 'ionic-angular';
 import { HttpClient } from "@angular/common/http";
-import { NgForm } from '@angular/forms';
 import { each } from 'lodash'
 
 @IonicPage()
@@ -110,7 +108,7 @@ export class OrderPage {
     this.day.total = this.day.total - (course == 'first' ? 10 : 30);
   }
 
-  submit(form: NgForm) {
+  submit() {
     const order = {
       _id: this.day._id,
       date: this.day.date,
@@ -122,7 +120,7 @@ export class OrderPage {
     };
     this.http.post('http://meal.fusionworks.md/api/order', order).subscribe(
       (response) => {
-        this.day = response;
+        // this.day = response;
         let toast = this.toastCtrl.create({
           message: 'Your order was successfully saved',
           position: 'middle',

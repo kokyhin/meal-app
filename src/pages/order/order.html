@@ -11,48 +11,46 @@
       </div>
     </div>
     <div class="order-form">
-      <form>
+      <div class="form-wrap">
         <div class="form-title">Your Order</div>
         <div class="input-wrapper">
           <div class="name">
-            <!-- <select class="form-control" *ngIf="day.options.first.length > 1; else defaultFirst" value="{{day.order.first.option}}" name="option">
-              <option *ngFor="let option of day.options.first;">{{option}}</option>
-            </select> -->
-            <!-- <span><ng-template #defaultFirst>{{day.options.first[0] || "First"}}</ng-template></span> -->
-            <span>First Course</span>
+            <ion-item class="form-control" *ngIf="day.options && day.options.first.length > 1; else defaultFirst">
+              <ion-select [(ngModel)]="day.first.option" interface="action-sheet">
+                <ion-option value="{{option}}" *ngFor="let option of day.options.first;">{{option}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ng-template #defaultFirst>{{day.first.option || "First Course"}}</ng-template>
           </div>
           <div class="navs">
             <button ion-button (tap)="decrease('first')"><ion-icon name="remove"></ion-icon></button>
             <div class="amount">{{ day.first.value }}</div>
             <button ion-button (tap)="increase('first')"><ion-icon name="add"></ion-icon></button>
           </div>
-          <!-- <input #first="ngModel" hidden type="text" id="first" class="form-control custom" type="number" min="0" [(ngModel)]="day.first.value" name="first"> -->
         </div>
         <div class="input-wrapper">
           <div class="name">
-            <!-- <select class="form-control" *ngIf="day.options.second.length > 1; else defaultSecond" value="{{day.order.second.option}}" name="option">
-              <option *ngFor="let option of day.options.second;">{{option}}</option>
-            </select> -->
-            <!-- <span><ng-template #defaultSecond>{{day.options.second[0] || "Second"}}</ng-template></span> -->
-            <span>Second Course</span>
+            <ion-item class="form-control" *ngIf="day.options && day.options.second.length > 1; else defaultSecond">
+              <ion-select [(ngModel)]="day.second.option" interface="action-sheet">
+                <ion-option value="{{option}}" *ngFor="let option of day.options.second;">{{option}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ng-template #defaultSecond>{{day.second.option || "Second Course"}}</ng-template>
           </div>
           <div class="navs">
             <button ion-button (tap)="decrease('second')"><ion-icon name="remove"></ion-icon></button>
             <div class="amount">{{ day.second.value }}</div>
             <button ion-button (tap)="increase('second')"><ion-icon name="add"></ion-icon></button>
           </div>
-
-          <!-- <input hidden type="text" id="second" class="form-control custom" type="number" [(ngModel)]="day.second.value" name="second"> -->
         </div>
         <div class="price">
           <div>Total</div>
           <div>{{day.total}} MDL</div>
         </div>
-
-      </form>
+      </div>
     </div>
     <div class="order-footer">
-      <button ion-button full (tap)="submit(order)">place order</button>
+      <button ion-button full (tap)="submit()">place order</button>
     </div>
   </div>
   <ion-refresher (ionRefresh)="updatePage($event)">
